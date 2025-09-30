@@ -40,8 +40,9 @@ class PopularProductList(generics.ListAPIView):
     serializer_class = serializers.ProductSerializer
 
     def get_queryset(self):
-        queryset = models.Product.objects.filter(rating_gte=4.0 , rating_lte=5.0)
-        queryset = queryset.annotate(random_order=Count('id'))
+        queryset = models.Product.objects.filter(
+            ratings__gte=4.0, ratings__lte=5.0
+        )
         queryset = list(queryset)
         random.shuffle(queryset)
         return queryset[:20]
@@ -83,7 +84,7 @@ class SimilarProduct(APIView):
 
 class SearchProductByTitle(APIView):
     def get(self,request):
-        query = request.query_params.get('title' , None)
+        query = request.query_params.get('q' , None)
         if query:
             products = models.Product.objects.filter(title__icontains=query)
             serializer = serializers.ProductSerializer(products , many=True)

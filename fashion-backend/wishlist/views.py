@@ -14,25 +14,29 @@ class GetWishlist(generics.ListAPIView):
         return models.WishList.objects.filter(userId = self.request.user)
 
 
+
 class ToggleWishList(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self,request):
-        user_id = request.user.id
+    def get(self, request):
+        user = request.user
         product_id = request.query_params.get('id')
 
-        if not user_id or not product_id:
-            return Response({"message":"Invalid request user id not found and product id"} , status=status.HTTP_400_BAD_REQUEST)
+        if not product_id:
+            return Response({"message": "Product id is required"}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
             product = models.Product.objects.get(id=product_id)
         except models.Product.DoesNotExist:
-            return Response({"message":"product not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        wishlist_item , created = models.WishList.objects.get_or_create(userId=user_id, product=product)
+        wishlist_item, created = models.WishList.objects.get_or_create(
+            userId=user,
+            product=product
+        )
 
         if created:
-            return Response({"message":"product added to wishlist"}, status=status.HTTP_201_CREATED)
+            return Response({"message": "Product added to wishlist"}, status=status.HTTP_201_CREATED)
         else:
             wishlist_item.delete()
-            return Response({"message":"product remove from wishlist"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"message": "Product removed from wishlist"}, status=status.HTTP_204_NO_CONTENT)

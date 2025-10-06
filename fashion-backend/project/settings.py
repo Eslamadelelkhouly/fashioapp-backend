@@ -25,11 +25,11 @@ SECRET_KEY = 'django-insecure-6l1va1my3h9tu66071f9%%ixh_sqf!s1mq%)s80@y=mrd$f9qk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*", "acca4133e187.ngrok-free.app", "acca4133e187.ngrok.io"]
+ALLOWED_HOSTS = ["*", "62b2fe21b016.ngrok-free.app", "62b2fe21b016.ngrok.io"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://acca4133e187.ngrok-free.app",
-    "https://acca4133e187.ngrok.io",   # لو بتستعمل النسخة القديمة
+    "https://62b2fe21b016.ngrok-free.app",
+    "https://62b2fe21b016.ngrok.io",   # لو بتستعمل النسخة القديمة
 ]
 # Application definition
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'core',
     'wishlist',
+    'cart'
 ]
 
 MIDDLEWARE = [

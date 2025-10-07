@@ -81,3 +81,12 @@ class UpdateCartItemQuantity(APIView):
         return Response({"message":"Item Quantity Updated Successfully"}, status=status.HTTP_200_OK)
 
 
+class GetUserCart(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CartSerializer
+    
+    def get(self,request):
+        user = request.user
+        cart_item = Cart.objects.filter(userid=user).order_by('-created_at')
+        serializer = CartSerializer(cart_item,many=True)
+        return Response(serializer.data)

@@ -65,3 +65,19 @@ class CartCount(APIView):
         user = request.user
         cart_count = Cart.objects.filter(userid=user).count()
         return Response({'cart_count':cart_count},status=status.HTTP_200_OK)
+
+
+class UpdateCartItemQuantity(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self,request):
+        item_id = request.query_params.get('id')
+        count = request.query_params.get('count')
+
+        cart_item = get_object_or_404(Cart,id=item_id)
+
+        cart_item.quantity = count
+        cart_item.save()
+        return Response({"message":"Item Quantity Updated Successfully"}, status=status.HTTP_200_OK)
+
+

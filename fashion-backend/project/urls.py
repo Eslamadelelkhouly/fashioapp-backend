@@ -8,4 +8,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls.authtoken')),
     path('api/products/', include('core.urls')),
     path('api/wishlist/', include('wishlist.urls')),
+    path('api/cart/', include('cart.urls')),
 ]

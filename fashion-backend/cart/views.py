@@ -11,33 +11,40 @@ from rest_framework.response import Response
 class AddItemCart(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self,request):
+    def post(self, request):
         user = request.user
         data = request.data
+        product_data = data.get('product')
+
+        if isinstance(product_data, dict):
+            product_id = product_data.get('id')
+        else:
+            product_id = product_data
+
         try:
-            product = Product.objects.get(id=data['product'])
+            product = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
-            return Response({"message":"Product doesn't exist"} , status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "Product doesn't exist"}, status=status.HTTP_404_NOT_FOUND)
+
         try:
             cart_item = Cart.objects.get(
                 userid=user,
                 product=product,
-                color = data['color'],
-                size = data['size']
+                color=data['color'],
+                size=data['size']
             )
-            cart_item.quantity += data.get('quantity',1)
+            cart_item.quantity += data.get('quantity', 1)
             cart_item.save()
-            return Response({'message':'Item updated sucessfully'})
+            return Response({'message': 'Item updated successfully'})
         except Cart.DoesNotExist:
             Cart.objects.create(
-                userid = user,
+                userid=user,
                 product=product,
-                color = data['color'],
-                size = data['size'],
-                quantity = data.get('quantity' ,1),
+                color=data['color'],
+                size=data['size'],
+                quantity=data.get('quantity', 1),
             )
-            return Response({'message':'Item add succssfully'},status=status.HTTP_201_CREATED)
-
+            return Response({'message': 'Item added successfully'}, status=status.HTTP_201_CREATED)
 class RemoveItemFromCart(APIView):
     permission_classes = [IsAuthenticated]
 

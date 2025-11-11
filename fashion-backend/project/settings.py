@@ -25,11 +25,11 @@ SECRET_KEY = 'django-insecure-6l1va1my3h9tu66071f9%%ixh_sqf!s1mq%)s80@y=mrd$f9qk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*", "https://pos-firefox-relatives-denver.trycloudflare.com", "https://pos-firefox-relatives-denver.trycloudflare.com"]
+ALLOWED_HOSTS = ["*", "https://midi-circuit-enjoy-directory.trycloudflare.com", "https://midi-circuit-enjoy-directory.trycloudflare.com"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://pos-firefox-relatives-denver.trycloudflare.com",
-    "https://pos-firefox-relatives-denver.trycloudflare.com",   # لو بتستعمل النسخة القديمة
+    "https://midi-circuit-enjoy-directory.trycloudflare.com",
+    "https://midi-circuit-enjoy-directory.trycloudflare.com",   # لو بتستعمل النسخة القديمة
 ]
 # Application definition
 
@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'core',
     'wishlist',
     'cart',
-    'extra'
+    'extra',
+    'order',
 ]
 
 MIDDLEWARE = [
